@@ -1,8 +1,22 @@
-﻿Rank,Ethnicity,Incidence
-1,White,-34.9
-2,Chinese,-2.45
-3,Mixed/Multiple ethnic groups,22.49
-4,Indian,35.63
-5,Other,45.78
-6,Bangladeshi and Pakistani,69.08
-7,Black,133.81
+﻿Age,Ethnicity,Incidence
+9-110  Years,Bangladeshi and Pakistani,191.00
+9-110  Years,Black,255.73
+9-110  Years,Chinese,119.47
+9-110  Years,Indian,157.55
+9-110  Years,Mixed/Multiple ethnic groups,144.41
+9-110  Years,Other,167.70
+9-110  Years,White,87.02
+9-64 Years,Bangladeshi and Pakistani,43.78
+9-64 Years,Black,47.27
+9-64 Years,Chinese,14.82u
+9-64 Years,Indian,35.20
+9-64 Years,Mixed/Multiple ethnic groups,12.73
+9-64 Years,Other,35.63
+9-64 Years,White,10.09
+65-110 Years,Bangladeshi and Pakistani,727.79
+65-110 Years,Black,1015.81
+65-110 Years,Chinese,501.05
+65-110 Years,Indian,603.63
+65-110 Years,Mixed/Multiple ethnic groups,624.50
+65-110 Years,Other,649.25
+65-110 Years,White,367.52
