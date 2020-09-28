@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <style>
+    body { margin:0; position:fixed; top:0; right:0; bottom:0; left:0; }
+    
+    body {
+      font-family: Arial;
+    }
+    
+    .y-axis line{
+      stroke: black;
+    }
+    
+    .annual-growth {
+      fill: black;
+    }
+    
+    .bar-label, .x-axis {
+      font-size: 8px;
+    }
+    
+    .domain, .tick line {
+      opacity: 0.5;
+    }
+    
+
+
+
+  </style>
+</head>
+
+<body>
+
+   <!-- Add 2 buttons -->
+<button onclick="update('var1')">Male</button>
+<button onclick="update('var2')">Female</button>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+  <script>
+		var margin = {top: 40, right: 50, bottom: 60, left: 50};
+    
+    var width = 600 - margin.left - margin.right,
+    		height = 600 - margin.top - margin.bottom;
+    
+    var svg = d3.select("body").append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    // Config
+    var cfg = {
+      labelMargin: 5,
+      xAxisMargin: 10,
+      legendRightMargin: 0
+    }
+    
+    var x = d3.scaleLinear()
+    	.range([0, width]);
+    
+    var colour = d3.scaleSequential(d3.interpolatePuRd);
+    
+    var y = d3.scaleBand()
+    	.range([height, 20])
+    	.padding(0.15);
+    
+    function parse(d) {
+      d.rank = +d.rank;
+      d.Incidence = +d.Incidence;
+      return d;
+    }
+    
+    var legend = svg.append("g")
+    	.attr("class", "legend");
+    
+    legend.append("text")
+    	.attr("x", width - cfg.legendRightMargin)
+    	.attr("text-anchor", "end")
+    	.text("Ethnicity");
+    
+    legend.append("text")
+      .attr("x", width - cfg.legendRightMargin)
+    	.attr("y", 18)
+    	.attr("text-anchor", "end")
+    	.style("opacity", 0.5)
+    	.text("Incidence(Per 100,000)");
+    
+    
+    d3.csv("https://raw.githubusercontent.com/apexmedicine/D3/master/demographics3.csv", parse, function(error, data) {
+      if (error) throw error;
+      
+      y.domain(data.map(function(d) { return d.Ethnicity; }));
+      x.domain(d3.extent(data, function(d) { return d.Incidence; }));
+      
+      var max = d3.max(data, function(d) { return d.Incidence; });
+      colour.domain([-max, max]);
+      
+      var yAxis = svg.append("g")
+      	.attr("class", "y-axis")
+      	.attr("transform", "translate(" + x(0) + ",50)")
+      	.append("line")
+          .attr("y1", 0)
+          .attr("y2", height);
+      
+      var xAxis = svg.append("g")
+      	.attr("class", "x-axis")
+      	.attr("transform", "translate(0," + (height + cfg.xAxisMargin) + ")")
+      	.call(d3.axisBottom(x).tickSizeOuter(0));
+      
+      var bars = svg.append("g")
+      	.attr("class", "bars")
+      
+      bars.selectAll("rect")
+      	.data(data)
+      .enter().append("rect")
+      	.attr("class", "Incidence")
+      	.attr("x", function(d) {
+       		return x(Math.min(0, d.Incidence));
+      	})
+      	.attr("y", function(d) { return y(d.Ethnicity); })
+      	.attr("height", y.bandwidth())
+      	.attr("width", function(d) { 
+        	return Math.abs(x(d.Incidence) - x(0))
+      	})
+      	.style("fill", function(d) {
+        	return colour(d.Incidence)
+      	});
+
+      var labels = svg.append("g")
+      	.attr("class", "labels");
+      
+      labels.selectAll("text")
+      	.data(data)
+      .enter().append("text")
+      	.attr("class", "bar-label")
+      	.attr("x", x(0))
+      	.attr("y", function(d) { return y(d.Ethnicity )})
+      	.attr("dx", function(d) {
+        	return d.Ethnicity < 0 ? cfg.labelMargin : -cfg.labelMargin;
+      	})
+      	.attr("dy", y.bandwidth())
+      	.attr("text-anchor", function(d) {
+        	return d.Incidence < 0 ? "start" : "end";
+      	})
+      	.text(function(d) { return d.Ethnicity })
+      	.style("fill", function(d) {
+        	 if (d.Ethhnicity == "White") {
+             return "blue";
+           }
+      	});
+      	
+    });
+    
+  </script>
+</body>
