@@ -1,8 +1,15 @@
-﻿Ethnicity,Male,Female
-Bangladeshi and Pakistani,191,21.69
-Black,255.73,24.84
-Chinese,119.47,0
-Indian,157.55,14.77
-Mixed/Multiple ethnic groups,144.41,9.7
-Other,167.7,14.08
-White,87.02,5.93
+﻿Ethnicity,Gender,Rate
+Bangladeshi and Pakistani,Male,191
+Black,Male,255.73
+Chinese,Male,119.47
+Indian,Male,157.55
+Mixed/Multiple ethnic groups,Male,144.41
+Other,Male,167.7
+White,Male,87.02
+Bangladeshi and Pakistani,Female,21.69
+Black,Female,24.84
+Chinese,Female,0
+Indian,Female,14.77
+Mixed/Multiple ethnic groups,Female,9.7
+Other,Female,14.08
+White,Female,5.93
